@@ -1,6 +1,6 @@
 # cash_register_ui
 
-UI of the cash register service
+cash-register UI
 
 ## Getting Started
 
