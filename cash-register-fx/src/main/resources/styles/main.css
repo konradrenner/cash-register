@@ -5,3 +5,35 @@
 .mainFxmlClass {
 
 }
+
+.calculator_pane{
+    -fx-margin: 10 10 10 10;
+}
+
+.calculator_button{
+    -fx-background-color: #3498db;
+    -fx-color: #ffffff;
+    -fx-font-size: 25px;
+    -fx-pref-width: 600px;
+    -fx-pref-height: 400px;
+    -fx-text-decoration: none;
+}
+
+.calculator_button:hover {
+    -fx-background-color: #ccffff;
+    -fx-text-decoration: none;
+}
+
+.calculator_operation_button{
+    -fx-background-color: #ff3333;
+    -fx-color: #ffffff;
+    -fx-font-size: 25px;
+    -fx-pref-width: 600px;
+    -fx-pref-height: 400px;
+    -fx-text-decoration: none;
+}
+
+.calculator_operation_button:hover {
+    -fx-background-color: #ff9999;
+    -fx-text-decoration: none;
+}
