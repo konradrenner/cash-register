@@ -5,4 +5,5 @@ module org.kore.cashregister {
 
     opens org.kore.cashregister to javafx.fxml;
     exports org.kore.cashregister;
+    exports org.kore.cashregister.ui;
 }
