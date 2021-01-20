@@ -6,28 +6,29 @@
 package org.kore.cashregister.ui;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.BiFunction;
 import javafx.beans.property.StringProperty;
 
 /**
  *
  * @author Konrad Renner
  */
-public class Calculation {
+public class CalculationBuilder {
 
     private final StringProperty uiProperty;
     private final List<CalculationNumber> numbers;
     private final List<CalculationOperation> operations;
-    private BigDecimal actResult;
+    private final BiFunction<List<BigDecimal>, List<CalculationOperation>, BigDecimal> calculationFunction;
 
-    public Calculation(StringProperty binding) {
+    public CalculationBuilder(StringProperty binding, BiFunction<List<BigDecimal>, List<CalculationOperation>, BigDecimal> calculationFunction) {
         this.uiProperty = binding;
         this.numbers = new ArrayList<>();
         this.numbers.add(new CalculationNumber());
         this.operations = new ArrayList<>();
-        this.actResult = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+        this.calculationFunction = calculationFunction;
     }
 
     public void addCalculationCharacter(String value) {
@@ -87,6 +88,18 @@ public class Calculation {
     }
 
     public BigDecimal getResult() {
-        return this.actResult;
+        if (numbers.size() == 1 && numbers.get(0).isEmpty()) {
+            return BigDecimal.ZERO;
+        }
+
+        if (numbers.get(numbers.size() - 1).isLastCharacterComma()) {
+            numbers.get(numbers.size() - 1).removeLastCharacter();
+        }
+
+        ArrayList<BigDecimal> mapped = new ArrayList<>(numbers.size());
+
+        numbers.stream().map(number -> number.toBigDecimal()).forEach(mapped::add);
+
+        return this.calculationFunction.apply(mapped, Collections.unmodifiableList(operations));
     }
 }

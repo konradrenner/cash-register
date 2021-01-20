@@ -5,11 +5,17 @@
  */
 package org.kore.cashregister.ui.test;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiFunction;
 import javafx.beans.property.StringProperty;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.kore.cashregister.ui.Calculation;
+import org.kore.cashregister.ui.CalculationBuilder;
+import org.kore.cashregister.ui.CalculationOperation;
 import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,16 +25,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * @author Konrad Renner
  */
 @ExtendWith(MockitoExtension.class)
-public class CalculationTest {
+public class CalculationBuilderTest {
 
     @Mock
     StringProperty uiProperty;
 
-    Calculation underTest;
+    @Mock
+    BiFunction<List<BigDecimal>, List<CalculationOperation>, BigDecimal> calculationFunction;
+
+    CalculationBuilder underTest;
 
     @BeforeEach
     public void setUp() {
-        underTest = new Calculation(uiProperty);
+        underTest = new CalculationBuilder(uiProperty, calculationFunction);
     }
 
     @Test
@@ -105,5 +114,38 @@ public class CalculationTest {
         when(uiProperty.get()).thenReturn("1+");
         underTest.removeLastCharacter();
         verify(uiProperty, times(2)).setValue("1");
+    }
+
+    @Test
+    public void nothing_for_calculation() {
+        assertEquals(BigDecimal.ZERO, underTest.getResult());
+        verifyNoInteractions(calculationFunction);
+    }
+
+    @Test
+    public void last_char_is_comma_in_calculation() {
+        underTest.addCalculationCharacter("1");
+        underTest.addCalculationCharacter(",");
+
+        ArrayList<BigDecimal> numbers = new ArrayList<>();
+        numbers.add(BigDecimal.ONE.setScale(2));
+
+        underTest.getResult();
+
+        verify(calculationFunction).apply(numbers, new ArrayList<>());
+    }
+
+    @Test
+    public void normal_calculation() {
+        underTest.addCalculationCharacter("1");
+        underTest.addCalculationCharacter(",");
+        underTest.addCalculationCharacter("1");
+
+        ArrayList<BigDecimal> numbers = new ArrayList<>();
+        numbers.add(new BigDecimal("1.10"));
+
+        underTest.getResult();
+
+        verify(calculationFunction).apply(numbers, new ArrayList<>());
     }
 }

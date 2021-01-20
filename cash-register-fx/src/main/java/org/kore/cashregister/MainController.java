@@ -19,7 +19,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import org.kore.cashregister.ui.Calculation;
+import org.kore.cashregister.ui.CalculationBuilder;
+import org.kore.cashregister.ui.Calculator;
 
 /**
  * FXML Controller class
@@ -52,7 +53,8 @@ public class MainController implements Initializable {
     @FXML
     BorderPane mainPane;
 
-    private Calculation manualCalculation;
+    private CalculationBuilder manualCalculation;
+    private Calculator calculator;
 
     /**
      * Initializes the controller class.
@@ -79,7 +81,8 @@ public class MainController implements Initializable {
             }
         });
 
-        manualCalculation = new Calculation(calculatorField.textProperty());
+        calculator = new Calculator();
+        manualCalculation = new CalculationBuilder(calculatorField.textProperty(), calculator::calculate);
     }
 
     @FXML
@@ -125,7 +128,7 @@ public class MainController implements Initializable {
     }
 
     void processCalculation() {
-        calculatorField.setText("");
+        System.out.println("Result=" + manualCalculation.getResult());
     }
 
     @FXML
