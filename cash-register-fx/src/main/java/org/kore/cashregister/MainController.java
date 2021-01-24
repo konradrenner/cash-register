@@ -5,6 +5,7 @@
  */
 package org.kore.cashregister;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -15,12 +16,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import org.kore.cashregister.ui.CalculationBuilder;
 import org.kore.cashregister.ui.Calculator;
+import org.kore.cashregister.ui.ResultList;
 
 /**
  * FXML Controller class
@@ -55,12 +58,15 @@ public class MainController implements Initializable {
 
     private CalculationBuilder manualCalculation;
     private Calculator calculator;
+    private ResultList results;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        resultList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        results = new ResultList(resultList.getItems());
 
         mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -128,7 +134,10 @@ public class MainController implements Initializable {
     }
 
     void processCalculation() {
-        System.out.println("Result=" + manualCalculation.getResult());
+        ManualEntry newEntry = new ManualEntry(manualCalculation.getResult());
+        BigDecimal newTotal = results.addEntry(newEntry);
+        resultOverall.setText(newTotal.toPlainString());
+        manualCalculation.clear();
     }
 
     @FXML

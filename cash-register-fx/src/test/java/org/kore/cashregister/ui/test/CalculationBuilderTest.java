@@ -148,4 +148,64 @@ public class CalculationBuilderTest {
 
         verify(calculationFunction).apply(numbers, new ArrayList<>());
     }
+
+    @Test
+    public void addition_calculation() {
+        underTest.addCalculationCharacter("1");
+        underTest.addCalculationCharacter(",");
+        underTest.addCalculationCharacter("1");
+        underTest.addCalculationOperation("ADD");
+        underTest.addCalculationCharacter("1");
+
+        ArrayList<BigDecimal> numbers = new ArrayList<>();
+        numbers.add(new BigDecimal("1.10"));
+        numbers.add(new BigDecimal("1.00"));
+
+        ArrayList<CalculationOperation> operations = new ArrayList<>();
+        operations.add(CalculationOperation.ADD);
+
+        underTest.getResult();
+
+        verify(calculationFunction).apply(numbers, operations);
+    }
+
+    @Test
+    public void addition_calculation_no_second_number() {
+        underTest.addCalculationCharacter("1");
+        underTest.addCalculationCharacter(",");
+        underTest.addCalculationCharacter("1");
+        underTest.addCalculationOperation("ADD");
+
+        ArrayList<BigDecimal> numbers = new ArrayList<>();
+        numbers.add(new BigDecimal("1.10"));
+
+        ArrayList<CalculationOperation> operations = new ArrayList<>();
+        operations.add(CalculationOperation.ADD);
+
+        underTest.getResult();
+
+        verify(calculationFunction).apply(numbers, operations);
+    }
+
+    @Test
+    public void calculation_after_clear() {
+        underTest.addCalculationCharacter("1");
+        underTest.addCalculationCharacter(",");
+        underTest.addCalculationCharacter("1");
+        underTest.addCalculationOperation("ADD");
+        underTest.addCalculationCharacter("1");
+        underTest.clear();
+        underTest.addCalculationCharacter("1");
+        underTest.addCalculationOperation("ADD");
+
+        ArrayList<BigDecimal> numbers = new ArrayList<>();
+        numbers.add(new BigDecimal("1.00"));
+
+        ArrayList<CalculationOperation> operations = new ArrayList<>();
+        operations.add(CalculationOperation.ADD);
+
+        underTest.getResult();
+
+        verify(calculationFunction).apply(numbers, operations);
+    }
 }

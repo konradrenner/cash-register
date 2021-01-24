@@ -6,6 +6,16 @@
 
 }
 
+.header{
+    -fx-background-color: #ffffff;
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
+
+.white_background{
+    -fx-background-color: #ffffff;
+}
+
 .calculator_pane{
     -fx-margin: 10 10 10 10;
 }
@@ -25,7 +35,7 @@
 }
 
 .calculator_operation_button{
-    -fx-background-color: #ff6666;
+    -fx-background-color: #cc3300;
     -fx-color: #ffffff;
     -fx-font-size: 25px;
     -fx-pref-width: 600px;
@@ -34,6 +44,6 @@
 }
 
 .calculator_operation_button:hover {
-    -fx-background-color: #ffcccc;
+    -fx-background-color: #ff6666;
     -fx-text-decoration: none;
 }

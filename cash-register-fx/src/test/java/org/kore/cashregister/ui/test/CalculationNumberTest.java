@@ -102,4 +102,38 @@ public class CalculationNumberTest {
         number.addCharacter('5');
         assertEquals(new BigDecimal("55.00"), number.toBigDecimal());
     }
+
+    public void noComma() {
+        CalculationNumber number = new CalculationNumber();
+        number.addCharacter('1');
+        number.addCharacter('5');
+
+        assertFalse(number.isLastCharacterComma());
+    }
+
+    public void one_after_Comma() {
+        CalculationNumber number = new CalculationNumber();
+        number.addCharacter('2');
+        number.addCharacter(',');
+        number.addCharacter('3');
+
+        assertFalse(number.isLastCharacterComma());
+    }
+
+    public void some_after_Comma() {
+        CalculationNumber number = new CalculationNumber();
+        number.addCharacter('3');
+        number.addCharacter('5');
+        number.addCharacter(',');
+        number.addCharacter('5');
+        number.addCharacter('2');
+
+        assertFalse(number.isLastCharacterComma());
+    }
+
+    public void number_empty_comma_test() {
+        CalculationNumber number = new CalculationNumber();
+
+        assertFalse(number.isLastCharacterComma());
+    }
 }

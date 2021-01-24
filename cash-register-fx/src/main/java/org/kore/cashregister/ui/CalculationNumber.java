@@ -48,7 +48,11 @@ public class CalculationNumber {
         parts.remove(parts.size() - 1);
     }
 
-    boolean isLastCharacterComma() {
+    public boolean isLastCharacterComma() {
+        if (parts.isEmpty()) {
+            return false;
+        }
+
         return parts.get(parts.size() - 1).charValue() == '.';
     }
 

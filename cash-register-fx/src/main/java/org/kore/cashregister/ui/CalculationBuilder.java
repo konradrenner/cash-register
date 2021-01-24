@@ -98,7 +98,7 @@ public class CalculationBuilder {
 
         ArrayList<BigDecimal> mapped = new ArrayList<>(numbers.size());
 
-        numbers.stream().map(number -> number.toBigDecimal()).forEach(mapped::add);
+        numbers.stream().filter(number -> !number.isEmpty()).map(number -> number.toBigDecimal()).forEach(mapped::add);
 
         return this.calculationFunction.apply(mapped, Collections.unmodifiableList(operations));
     }

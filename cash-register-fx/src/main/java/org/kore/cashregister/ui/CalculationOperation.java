@@ -17,7 +17,7 @@ public enum CalculationOperation {
 
     ADD((calculatedValue, nextvalue) -> calculatedValue.add(nextvalue)),
     SUBTRACT((calculatedValue, nextvalue) -> calculatedValue.subtract(nextvalue)),
-    DIVIDE((calculatedValue, nextvalue) -> calculatedValue.divide(nextvalue).setScale(2, RoundingMode.HALF_UP)),
+    DIVIDE((calculatedValue, nextvalue) -> calculatedValue.divide(nextvalue, 2, RoundingMode.HALF_UP)),
     MULTIPLY((calculatedValue, nextvalue) -> calculatedValue.multiply(nextvalue));
 
     private final BiFunction<BigDecimal, BigDecimal, BigDecimal> function;
