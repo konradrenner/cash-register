@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -178,12 +180,21 @@ public class MainController implements Initializable {
     }
 
     void processCalculation() {
-        ManualOrderEntry newEntry = new ManualOrderEntry(manualCalculation.getResult());
-        BigDecimal newTotal = results.addEntry(newEntry);
-        if (newTotal.longValue() > 0) {
-            resultOverall.setText(newTotal.toPlainString());
-        }
-        manualCalculation.clear();
+        final BigDecimal calcResult = manualCalculation.getResult();
+        TextInputDialog td = new TextInputDialog("");
+        td.setHeaderText("Bitte eine Bezeichnung für die Bonierung von € " + calcResult + " eingeben:");
+        Optional<String> result = td.showAndWait();
+
+        result.ifPresent(text -> {
+            if (!text.isBlank() && text.length() > 3) {
+                ManualOrderEntry newEntry = new ManualOrderEntry(calcResult, text);
+                BigDecimal newTotal = results.addEntry(newEntry);
+                if (newTotal.longValue() > 0) {
+                    resultOverall.setText(newTotal.toPlainString());
+                }
+                manualCalculation.clear();
+            }
+        });
     }
 
     @FXML

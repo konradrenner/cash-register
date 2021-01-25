@@ -40,10 +40,10 @@ public class ResultList {
         entries.add(entry);
         Label descLabel = new Label(entry.getDescription());
         descLabel.setAlignment(Pos.CENTER_LEFT);
-        descLabel.setPrefWidth(120);
+        descLabel.setPrefWidth(160);
         Label valueLabel = new Label(value.toPlainString());
         valueLabel.setAlignment(Pos.CENTER_RIGHT);
-        valueLabel.setPrefWidth(120);
+        valueLabel.setPrefWidth(80);
         HBox box = new HBox();
         box.getChildren().add(descLabel);
         box.getChildren().add(valueLabel);

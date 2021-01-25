@@ -16,14 +16,22 @@ public class ManualOrderEntry implements OrderEntry {
     private final static int ONE = 1;
 
     private final BigDecimal unitPrice;
+    private final String description;
 
     public ManualOrderEntry(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
+        this.description = "";
     }
+
+    public ManualOrderEntry(BigDecimal unitPrice, String description) {
+        this.unitPrice = unitPrice;
+        this.description = description;
+    }
+
 
     @Override
     public String getDescription() {
-        return "";
+        return this.description;
     }
 
     @Override
@@ -38,7 +46,7 @@ public class ManualOrderEntry implements OrderEntry {
 
     @Override
     public String toString() {
-        return "ManualEntry{" + "unitPrice=" + unitPrice + '}';
+        return "ManualOrderEntry{" + "unitPrice=" + unitPrice + ", description=" + description + '}';
     }
 
 }

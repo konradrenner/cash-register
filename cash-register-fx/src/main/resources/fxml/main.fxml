@@ -22,76 +22,6 @@
     <center>
         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
-                <Tab id="calculator" text="Manuelle Eingabe">
-                    <content>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0">
-                            <center>
-                                <GridPane hgap="100.0" vgap="70.0" BorderPane.alignment="CENTER">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    </rowConstraints>
-                                    <children>
-                                        <Button id="calculator7" fx:id="calculator7" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="7" />
-                                        <Button id="calculator8" fx:id="calculator8" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="8" GridPane.columnIndex="1" />
-                                        <Button id="calculator9" fx:id="calculator9" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="9" GridPane.columnIndex="2" />
-                                        <Button id="calculator4" fx:id="calculator4" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="4" GridPane.rowIndex="1" />
-                                        <Button id="calculator5" fx:id="calculator5" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                        <Button id="calculator6" fx:id="calculator6" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                        <Button id="calculator1" fx:id="calculator1" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="1" GridPane.rowIndex="2" />
-                                        <Button id="calculator2" fx:id="calculator2" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                        <Button id="calculator3" fx:id="calculator3" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="3" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                        <Button id="calculatorComma" fx:id="calculatorComma" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="," GridPane.rowIndex="3" />
-                                        <Button id="calculator0" fx:id="calculator0" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                        <Button id="calculatorEnter" fx:id="calculatorEnter" mnemonicParsing="false" onAction="#calculateButtonClicked" styleClass="calculator_button" text="=" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                    </children>
-                           <BorderPane.margin>
-                              <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-                           </BorderPane.margin>
-                                </GridPane>
-                            </center>
-                            <right>
-                                <GridPane vgap="30.0" BorderPane.alignment="CENTER">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    </rowConstraints>
-                                    <children>
-                                        <Button id="calculatorC" fx:id="calculatorC" mnemonicParsing="false" onAction="#cButtonClicked" styleClass="calculator_operation_button" text="C" />
-                                        <Button id="calculatorCe" fx:id="calculatorCe" mnemonicParsing="false" onAction="#ceButtonClicked" styleClass="calculator_operation_button" text="CE" GridPane.rowIndex="1" />
-                                        <Button id="calculatorDivide" fx:id="calculatorDivide" mnemonicParsing="false" onAction="#operationButtonClicked" styleClass="calculator_operation_button" text="/" GridPane.rowIndex="2" />
-                                        <Button id="calculatorMultiply" fx:id="calculatorMultiply" mnemonicParsing="false" onAction="#operationButtonClicked" styleClass="calculator_operation_button" text="x" GridPane.rowIndex="3" />
-                                        <Button id="calculatorAdd" fx:id="calculatorAdd" mnemonicParsing="false" onAction="#operationButtonClicked" styleClass="calculator_operation_button" text="+" GridPane.rowIndex="4" />
-                                        <Button id="calculatorSubtract" fx:id="calculatorSubtract" mnemonicParsing="false" onAction="#operationButtonClicked" styleClass="calculator_operation_button" text="-" GridPane.rowIndex="5" />
-                                    </children>
-                           <BorderPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </BorderPane.margin>
-                                </GridPane>
-                            </right>
-                            <top>
-                                <TextField id="calculatorField" fx:id="calculatorField" editable="false" prefHeight="75.0" prefWidth="749.0" BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </BorderPane.margin></TextField>
-                            </top>
-                        </BorderPane>
-                    </content>
-                </Tab>
                 <Tab id="beverage" text="Getränke">
                     <content>
                         <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -170,6 +100,76 @@
                            </BorderPane.margin>
                         </GridPane>
                      </center>
+                        </BorderPane>
+                    </content>
+                </Tab>
+                <Tab id="calculator" text="Manuelle Eingabe">
+                    <content>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                            <center>
+                                <GridPane hgap="100.0" vgap="70.0" BorderPane.alignment="CENTER">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Button id="calculator7" fx:id="calculator7" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="7" />
+                                        <Button id="calculator8" fx:id="calculator8" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="8" GridPane.columnIndex="1" />
+                                        <Button id="calculator9" fx:id="calculator9" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="9" GridPane.columnIndex="2" />
+                                        <Button id="calculator4" fx:id="calculator4" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="4" GridPane.rowIndex="1" />
+                                        <Button id="calculator5" fx:id="calculator5" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Button id="calculator6" fx:id="calculator6" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                        <Button id="calculator1" fx:id="calculator1" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="1" GridPane.rowIndex="2" />
+                                        <Button id="calculator2" fx:id="calculator2" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Button id="calculator3" fx:id="calculator3" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="3" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                        <Button id="calculatorComma" fx:id="calculatorComma" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="," GridPane.rowIndex="3" />
+                                        <Button id="calculator0" fx:id="calculator0" mnemonicParsing="false" onAction="#numberButtonClicked" styleClass="calculator_button" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <Button id="calculatorEnter" fx:id="calculatorEnter" mnemonicParsing="false" onAction="#calculateButtonClicked" styleClass="calculator_button" text="=" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                    </children>
+                           <BorderPane.margin>
+                              <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                           </BorderPane.margin>
+                                </GridPane>
+                            </center>
+                            <right>
+                                <GridPane vgap="30.0" BorderPane.alignment="CENTER">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Button id="calculatorC" fx:id="calculatorC" mnemonicParsing="false" onAction="#cButtonClicked" styleClass="calculator_operation_button" text="C" />
+                                        <Button id="calculatorCe" fx:id="calculatorCe" mnemonicParsing="false" onAction="#ceButtonClicked" styleClass="calculator_operation_button" text="CE" GridPane.rowIndex="1" />
+                                        <Button id="calculatorDivide" fx:id="calculatorDivide" mnemonicParsing="false" onAction="#operationButtonClicked" styleClass="calculator_operation_button" text="/" GridPane.rowIndex="2" />
+                                        <Button id="calculatorMultiply" fx:id="calculatorMultiply" mnemonicParsing="false" onAction="#operationButtonClicked" styleClass="calculator_operation_button" text="x" GridPane.rowIndex="3" />
+                                        <Button id="calculatorAdd" fx:id="calculatorAdd" mnemonicParsing="false" onAction="#operationButtonClicked" styleClass="calculator_operation_button" text="+" GridPane.rowIndex="4" />
+                                        <Button id="calculatorSubtract" fx:id="calculatorSubtract" mnemonicParsing="false" onAction="#operationButtonClicked" styleClass="calculator_operation_button" text="-" GridPane.rowIndex="5" />
+                                    </children>
+                           <BorderPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </BorderPane.margin>
+                                </GridPane>
+                            </right>
+                            <top>
+                                <TextField id="calculatorField" fx:id="calculatorField" editable="false" prefHeight="75.0" prefWidth="749.0" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </BorderPane.margin></TextField>
+                            </top>
                         </BorderPane>
                     </content>
                 </Tab>
