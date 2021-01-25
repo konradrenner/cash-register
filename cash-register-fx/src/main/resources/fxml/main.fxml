@@ -92,22 +92,27 @@
                         </BorderPane>
                     </content>
                 </Tab>
-                <Tab id="beverages" text="Getränke">
+                <Tab id="beverage" text="Getränke">
                     <content>
                         <BorderPane prefHeight="200.0" prefWidth="200.0">
                             <center>
-                                <GridPane hgap="10.0" vgap="10.0" BorderPane.alignment="CENTER">
+                                <GridPane fx:id="beveragePane" hgap="15.0" vgap="15.0" BorderPane.alignment="CENTER">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     </columnConstraints>
                                     <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                            <BorderPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </BorderPane.margin>
                                 </GridPane>
                             </center>
@@ -118,18 +123,23 @@
                     <content>
                         <BorderPane>
                      <center>
-                        <GridPane hgap="10.0" vgap="10.0" BorderPane.alignment="CENTER">
+                         <GridPane fx:id="foodPane" hgap="15.0" vgap="15.0" BorderPane.alignment="CENTER">
                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <BorderPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </BorderPane.margin>
                         </GridPane>
                      </center>
@@ -140,18 +150,23 @@
                     <content>
                         <BorderPane>
                      <center>
-                        <GridPane hgap="10.0" vgap="10.0" BorderPane.alignment="CENTER">
+                         <GridPane fx:id="otherPane" hgap="15.0" vgap="15.0" BorderPane.alignment="CENTER">
                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <BorderPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </BorderPane.margin>
                         </GridPane>
                      </center>
@@ -165,14 +180,14 @@
         <VBox prefHeight="768.0" prefWidth="275.0" BorderPane.alignment="CENTER">
             <children>
                 <ListView id="resultList" fx:id="resultList" prefHeight="752.0" prefWidth="275.0" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="275.0">
                <children>
                   <Label text="Gesamt">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <TextField id="resultOverall" fx:id="resultOverall" editable="false" />
+                  <TextField id="resultOverall" fx:id="resultOverall" alignment="CENTER_RIGHT" editable="false" />
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

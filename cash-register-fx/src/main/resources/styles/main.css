@@ -47,3 +47,45 @@
     -fx-background-color: #ff6666;
     -fx-text-decoration: none;
 }
+
+.beverage_button{
+    -fx-background-color: #0099cc;
+    -fx-color: #ffffff;
+    -fx-font-size: 25px;
+    -fx-pref-width: 600px;
+    -fx-pref-height: 400px;
+    -fx-text-decoration: none;
+}
+
+.beverage_button:hover {
+    -fx-background-color: #ccffff;
+    -fx-text-decoration: none;
+}
+
+.food_button{
+    -fx-background-color: #999900;
+    -fx-color: #ffffff;
+    -fx-font-size: 25px;
+    -fx-pref-width: 600px;
+    -fx-pref-height: 400px;
+    -fx-text-decoration: none;
+}
+
+.food_button:hover {
+    -fx-background-color: #ffffcc;
+    -fx-text-decoration: none;
+}
+
+.other_button{
+    -fx-background-color: #00cc00;
+    -fx-color: #ffffff;
+    -fx-font-size: 25px;
+    -fx-pref-width: 600px;
+    -fx-pref-height: 400px;
+    -fx-text-decoration: none;
+}
+
+.other_button:hover {
+    -fx-background-color: #ccffcc;
+    -fx-text-decoration: none;
+}

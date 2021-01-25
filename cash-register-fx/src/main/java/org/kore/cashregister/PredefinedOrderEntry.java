@@ -6,24 +6,27 @@
 package org.kore.cashregister;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  *
  * @author Konrad Renner
  */
-public class ManualEntry implements OrderEntry {
+public class PredefinedOrderEntry implements OrderEntry {
 
     private final static int ONE = 1;
 
     private final BigDecimal unitPrice;
+    private final String description;
 
-    public ManualEntry(BigDecimal unitPrice) {
+    public PredefinedOrderEntry(String description, BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
+        this.description = description;
     }
 
     @Override
     public String getDescription() {
-        return "";
+        return description;
     }
 
     @Override
@@ -33,12 +36,12 @@ public class ManualEntry implements OrderEntry {
 
     @Override
     public BigDecimal getUnitPrice() {
-        return this.unitPrice;
+        return this.unitPrice.setScale(2, RoundingMode.HALF_UP);
     }
 
     @Override
     public String toString() {
-        return "ManualEntry{" + "unitPrice=" + unitPrice + '}';
+        return "PredefinedOrderEntry{" + "unitPrice=" + unitPrice + ", description=" + description + '}';
     }
 
 }

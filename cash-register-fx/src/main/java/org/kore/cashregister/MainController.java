@@ -8,12 +8,17 @@ package org.kore.cashregister;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -21,8 +26,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import org.kore.cashregister.jpa.PersistentMenuEntryRegistry;
 import org.kore.cashregister.ui.CalculationBuilder;
 import org.kore.cashregister.ui.Calculator;
+import org.kore.cashregister.ui.MenuButtonFactory;
 import org.kore.cashregister.ui.ResultList;
 
 /**
@@ -56,9 +64,20 @@ public class MainController implements Initializable {
     @FXML
     BorderPane mainPane;
 
+    @FXML
+    GridPane beveragePane;
+
+    @FXML
+    GridPane foodPane;
+
+    @FXML
+    GridPane otherPane;
+
     private CalculationBuilder manualCalculation;
     private Calculator calculator;
     private ResultList results;
+    private MenuEntryRegistry menuRegistry;
+    private Map<String, MenuEntry> menuEntries;
 
     /**
      * Initializes the controller class.
@@ -67,6 +86,8 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         resultList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         results = new ResultList(resultList.getItems());
+        menuRegistry = new PersistentMenuEntryRegistry();
+        initTabs();
 
         mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -89,6 +110,29 @@ public class MainController implements Initializable {
 
         calculator = new Calculator();
         manualCalculation = new CalculationBuilder(calculatorField.textProperty(), calculator::calculate);
+    }
+
+    void initTabs() {
+        menuEntries = new HashMap<>();
+        menuRegistry.findAll().stream().forEach(entry -> menuEntries.put(entry.getId(), entry));
+
+        initOneTab(MenuEntryCategory.FOOD, menuEntries, foodPane);
+        initOneTab(MenuEntryCategory.BEVERAGE, menuEntries, beveragePane);
+        initOneTab(MenuEntryCategory.OTHER, menuEntries, otherPane);
+    }
+
+    void initOneTab(MenuEntryCategory category, Map<String, MenuEntry> entries, GridPane pane) {
+        MenuButtonFactory buttonFactory = new MenuButtonFactory(category, entries.values());
+        buttonFactory.setButtonsOnPane(pane, this::menuButtonClicked);
+    }
+
+    public void menuButtonClicked(String id) {
+        MenuEntry entry = this.menuEntries.get(id);
+        PredefinedOrderEntry order = new PredefinedOrderEntry(entry.getDescription(), entry.getUnitPrice());
+        BigDecimal newTotal = results.addEntry(order);
+        if (newTotal.longValue() > 0) {
+            resultOverall.setText(newTotal.toPlainString());
+        }
     }
 
     @FXML
@@ -134,19 +178,40 @@ public class MainController implements Initializable {
     }
 
     void processCalculation() {
-        ManualEntry newEntry = new ManualEntry(manualCalculation.getResult());
+        ManualOrderEntry newEntry = new ManualOrderEntry(manualCalculation.getResult());
         BigDecimal newTotal = results.addEntry(newEntry);
-        resultOverall.setText(newTotal.toPlainString());
+        if (newTotal.longValue() > 0) {
+            resultOverall.setText(newTotal.toPlainString());
+        }
         manualCalculation.clear();
     }
 
     @FXML
     public void checkoutButtonClicked(ActionEvent e) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Bezahlung");
+        alert.setHeaderText("Zahlvorgang ist gestartet");
+        alert.setContentText("Bitte folgenden Betrag bezahlen: € " + resultOverall.getText());
 
+        alert.showAndWait();
     }
 
     @FXML
     public void abortButtonClicked(ActionEvent e) {
+        ObservableList<Integer> selectedIndices = resultList.getSelectionModel().getSelectedIndices();
+        if (selectedIndices.size() > 0) {
+            BigDecimal newTotal = BigDecimal.ZERO;
+            for (Integer index : selectedIndices) {
+                newTotal = results.removeEntry(index.intValue());
+            }
+            resultOverall.setText(newTotal.toPlainString());
+        } else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Bitte eine Auswahl in der Liste treffen");
+//alert.setContentText("Ooops, there was an error!");
 
+            alert.showAndWait();
+        }
     }
 }
