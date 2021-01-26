@@ -7,6 +7,8 @@ package org.kore.cashregister;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +31,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import org.kore.cashregister.jpa.PersistentMenuEntryRegistry;
+import org.kore.cashregister.csv.PersistentMenuEntryRegistry;
+import org.kore.cashregister.csv.PersistentOrderRegistry;
+import org.kore.cashregister.print.ReceiptPrinter;
 import org.kore.cashregister.ui.CalculationBuilder;
 import org.kore.cashregister.ui.Calculator;
 import org.kore.cashregister.ui.MenuButtonFactory;
@@ -80,6 +84,8 @@ public class MainController implements Initializable {
     private ResultList results;
     private MenuEntryRegistry menuRegistry;
     private Map<String, MenuEntry> menuEntries;
+    private OrderPrinter printer;
+    private OrderRegistry orderRegistry;
 
     /**
      * Initializes the controller class.
@@ -88,8 +94,10 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         resultList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         results = new ResultList(resultList.getItems());
-        menuRegistry = new PersistentMenuEntryRegistry();
+        menuRegistry = new PersistentMenuEntryRegistry(Paths.get(System.getProperty("storageFolder")));
         initTabs();
+        this.printer = new ReceiptPrinter();
+        this.orderRegistry = new PersistentOrderRegistry(Paths.get(System.getProperty("storageFolder")));
 
         mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -199,11 +207,17 @@ public class MainController implements Initializable {
 
     @FXML
     public void checkoutButtonClicked(ActionEvent e) {
+
+        List<OrderEntry> entries = results.getEntries();
+
+        Instant now = Instant.now();
+        printer.print(now, entries, results.getActTotal());
+        orderRegistry.persistOrder(now, entries);
+
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Bezahlung");
         alert.setHeaderText("Zahlvorgang ist gestartet");
-        alert.setContentText("Bitte folgenden Betrag bezahlen: € " + resultOverall.getText());
-
+        alert.setContentText("Der Rechnungsbetrag lautet: € " + resultOverall.getText());
         alert.showAndWait();
     }
 

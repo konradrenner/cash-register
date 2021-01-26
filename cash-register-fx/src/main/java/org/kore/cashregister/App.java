@@ -35,6 +35,11 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        String storageFolder = System.getProperty("storageFolder");
+        if (storageFolder == null) {
+            storageFolder = System.getProperty("user.home");
+            System.setProperty("storageFolder", storageFolder);
+        }
         launch();
     }
 

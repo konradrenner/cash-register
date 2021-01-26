@@ -5,13 +5,13 @@
  */
 package org.kore.cashregister;
 
-import java.util.Set;
+import java.time.Instant;
+import java.util.List;
 
 /**
  *
  * @author Konrad Renner
  */
-public interface MenuEntryRegistry {
-
-    Set<MenuEntry> findAll();
+public interface OrderRegistry {
+    void persistOrder(Instant orderTime, List<OrderEntry> entries);
 }

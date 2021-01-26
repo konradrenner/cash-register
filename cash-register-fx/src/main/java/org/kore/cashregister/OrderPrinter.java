@@ -5,13 +5,15 @@
  */
 package org.kore.cashregister;
 
-import java.util.Set;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.List;
 
 /**
  *
  * @author Konrad Renner
  */
-public interface MenuEntryRegistry {
+public interface OrderPrinter {
 
-    Set<MenuEntry> findAll();
+    void print(Instant orderTime, List<OrderEntry> entries, BigDecimal total);
 }

@@ -7,6 +7,7 @@ package org.kore.cashregister.ui;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -60,4 +61,13 @@ public class ResultList {
         actTotal = actTotal.subtract(entry.getUnitPrice().multiply(BigDecimal.valueOf(entry.getAmount())));
         return actTotal;
     }
+
+    public List<OrderEntry> getEntries() {
+        return Collections.unmodifiableList(entries);
+    }
+
+    public BigDecimal getActTotal() {
+        return actTotal;
+    }
+
 }
