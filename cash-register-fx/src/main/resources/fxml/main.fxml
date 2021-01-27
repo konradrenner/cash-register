@@ -10,11 +10,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -177,9 +177,9 @@
         </TabPane>
     </center>
     <right>
-        <VBox prefHeight="768.0" prefWidth="275.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="100.0" prefWidth="275.0" BorderPane.alignment="CENTER">
             <children>
-                <ListView id="resultList" fx:id="resultList" prefHeight="752.0" prefWidth="275.0" />
+                <ListView id="resultList" fx:id="resultList" prefHeight="900.0" prefWidth="275.0" />
                 <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="275.0">
                <children>
                   <Label text="Gesamt">
@@ -206,15 +206,22 @@
         </VBox>
     </right>
    <top>
-       <AnchorPane prefHeight="52.0" prefWidth="1280.0" styleClass="white_background" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="56.0" fitWidth="377.0" layoutX="915.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+       <BorderPane style="white_background" BorderPane.alignment="CENTER">
+         <right>
+             <ImageView fitHeight="56.0" fitWidth="377.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
                   <Image url="@../images/logo_stuben.jpg" />
                </image>
             </ImageView>
-            <Label layoutX="14.0" layoutY="2.0" styleClass="header" text="Kasse" />
-         </children>
-      </AnchorPane>
+         </right>
+         <center>
+         </center>
+         <left>
+             <Label alignment="CENTER_LEFT" styleClass="header" text="Kasse" BorderPane.alignment="CENTER" />
+         </left>
+         <center>
+            <Pane styleClass="white_background" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
    </top>
 </BorderPane>

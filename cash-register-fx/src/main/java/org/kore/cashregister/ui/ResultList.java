@@ -6,6 +6,7 @@
 package org.kore.cashregister.ui;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,4 +71,9 @@ public class ResultList {
         return actTotal;
     }
 
+    public void clear() {
+        entries.clear();
+        uiList.clear();
+        actTotal = new BigDecimal(BigInteger.ZERO).setScale(2);
+    }
 }

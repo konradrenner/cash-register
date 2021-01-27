@@ -219,6 +219,9 @@ public class MainController implements Initializable {
         alert.setHeaderText("Zahlvorgang ist gestartet");
         alert.setContentText("Der Rechnungsbetrag lautet: € " + resultOverall.getText());
         alert.showAndWait();
+
+        results.clear();
+        resultOverall.setText(results.getActTotal().toPlainString());
     }
 
     @FXML
