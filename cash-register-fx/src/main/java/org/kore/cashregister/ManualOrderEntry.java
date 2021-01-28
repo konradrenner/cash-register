@@ -28,6 +28,15 @@ public class ManualOrderEntry implements OrderEntry {
         this.description = description;
     }
 
+    @Override
+    public void increaseAmount() {
+        // do nothing
+    }
+
+    @Override
+    public void decreaseAmount() {
+        // do nothing
+    }
 
     @Override
     public String getDescription() {

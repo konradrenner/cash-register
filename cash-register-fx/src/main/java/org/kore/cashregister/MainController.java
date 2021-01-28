@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,8 +30,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import org.kore.cashregister.csv.PersistentMenuEntryRegistry;
 import org.kore.cashregister.csv.PersistentOrderRegistry;
 import org.kore.cashregister.print.ReceiptPrinter;
@@ -99,6 +102,28 @@ public class MainController implements Initializable {
         this.printer = new ReceiptPrinter();
         this.orderRegistry = new PersistentOrderRegistry(Paths.get(System.getProperty("storageFolder")));
 
+        initNumPadEvents();
+
+        initListViewDoubleClick();
+
+        calculator = new Calculator();
+        manualCalculation = new CalculationBuilder(calculatorField.textProperty(), calculator::calculate);
+    }
+
+    private void initListViewDoubleClick() {
+        resultList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent click) {
+
+                if (click.getClickCount() == 2) {
+                    resultOverall.setText(results.decreaseEntry(resultList.getSelectionModel().getSelectedIndex()).toPlainString());
+                }
+            }
+        });
+    }
+
+    private void initNumPadEvents() {
         mainPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -117,9 +142,6 @@ public class MainController implements Initializable {
                 }
             }
         });
-
-        calculator = new Calculator();
-        manualCalculation = new CalculationBuilder(calculatorField.textProperty(), calculator::calculate);
     }
 
     void initTabs() {
@@ -226,12 +248,13 @@ public class MainController implements Initializable {
 
     @FXML
     public void abortButtonClicked(ActionEvent e) {
-        ObservableList<Integer> selectedIndices = resultList.getSelectionModel().getSelectedIndices();
-        if (selectedIndices.size() > 0) {
-            BigDecimal newTotal = BigDecimal.ZERO;
-            for (Integer index : selectedIndices) {
-                newTotal = results.removeEntry(index.intValue());
+        ObservableList<Pane> selectedItems = resultList.getSelectionModel().getSelectedItems();
+        if (selectedItems.size() > 0) {
+            LinkedHashSet<String> descriptions = new LinkedHashSet<>();
+            for (Pane pane : selectedItems) {
+                descriptions.add(pane.getId());
             }
+            BigDecimal newTotal = results.removeEntries(descriptions);
             resultOverall.setText(newTotal.toPlainString());
         } else {
             Alert alert = new Alert(AlertType.ERROR);

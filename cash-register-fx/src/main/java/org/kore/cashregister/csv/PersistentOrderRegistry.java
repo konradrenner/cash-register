@@ -6,12 +6,15 @@
 package org.kore.cashregister.csv;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 import org.kore.cashregister.OrderEntry;
@@ -23,12 +26,14 @@ import org.kore.cashregister.OrderRegistry;
  */
 public class PersistentOrderRegistry implements OrderRegistry {
 
+    private static final String SEMICOLON = ";";
+
     private final Path storageFolder;
     private final String fileId;
 
     public PersistentOrderRegistry(Path storageFolder) {
         this.storageFolder = storageFolder;
-        this.fileId = Instant.now().toString() + ".csv";
+        this.fileId = "kassenbons.csv";
     }
 
 
@@ -38,10 +43,12 @@ public class PersistentOrderRegistry implements OrderRegistry {
         Path orderFile = Paths.get(storageFolder.toString(), fileId);
 
         List<String> lines = new ArrayList<>(entries.size());
-
+        if (Files.notExists(orderFile)) {
+            lines.add(createHeader());
+        }
         entries.stream()
                 .map(this::createLine)
-                .map(line -> orderTime.atZone(ZoneId.systemDefault()).toString() + ';' + line)
+                .map(line -> orderTime.getEpochSecond() + SEMICOLON + orderTime.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)) + SEMICOLON + orderTime.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)) + SEMICOLON + line)
                 .forEach(lines::add);
 
         try {
@@ -53,12 +60,20 @@ public class PersistentOrderRegistry implements OrderRegistry {
 
     String createLine(OrderEntry entry) {
         StringBuilder sb = new StringBuilder(entry.getDescription());
-        sb.append(';');
-        sb.append(entry.getAmount());
-        sb.append(';');
+        sb.append(SEMICOLON);
         sb.append(entry.getUnitPrice());
+        sb.append(SEMICOLON);
+        sb.append(entry.getAmount());
+        sb.append(SEMICOLON);
+        sb.append(entry.getUnitPrice().multiply(BigDecimal.valueOf(entry.getAmount())));
+        sb.append(SEMICOLON);
+
 
         return sb.toString();
+    }
+
+    String createHeader() {
+        return "Bon-Nr.;Bon-Datum;Bon-Uhrzeit;Artikel;Einzelpreis;Menge;Preis;";
     }
 
 }

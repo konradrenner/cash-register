@@ -206,7 +206,7 @@
         </VBox>
     </right>
    <top>
-       <BorderPane style="white_background" BorderPane.alignment="CENTER">
+       <BorderPane BorderPane.alignment="CENTER">
          <right>
              <ImageView fitHeight="56.0" fitWidth="377.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>

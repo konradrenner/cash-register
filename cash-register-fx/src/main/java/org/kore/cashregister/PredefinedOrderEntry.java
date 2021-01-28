@@ -14,14 +14,14 @@ import java.math.RoundingMode;
  */
 public class PredefinedOrderEntry implements OrderEntry {
 
-    private final static int ONE = 1;
-
     private final BigDecimal unitPrice;
     private final String description;
+    private int amount;
 
     public PredefinedOrderEntry(String description, BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
         this.description = description;
+        this.amount = 1;
     }
 
     @Override
@@ -31,8 +31,22 @@ public class PredefinedOrderEntry implements OrderEntry {
 
     @Override
     public int getAmount() {
-        return ONE;
+        return amount;
     }
+
+    @Override
+    public void increaseAmount() {
+        amount++;
+    }
+
+    @Override
+    public void decreaseAmount() {
+        if (amount == 0) {
+            return;
+        }
+        amount--;
+    }
+
 
     @Override
     public BigDecimal getUnitPrice() {
@@ -41,7 +55,7 @@ public class PredefinedOrderEntry implements OrderEntry {
 
     @Override
     public String toString() {
-        return "PredefinedOrderEntry{" + "unitPrice=" + unitPrice + ", description=" + description + '}';
+        return "PredefinedOrderEntry{" + "unitPrice=" + unitPrice + ", description=" + description + ", amount=" + amount + '}';
     }
 
 }

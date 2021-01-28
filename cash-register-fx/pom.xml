@@ -92,6 +92,7 @@
                         <configuration>
                             <options>
                                 <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000</option>
+                                <option>--enable-preview</option>
                             </options>
                         </configuration>
                     </execution>
@@ -101,6 +102,7 @@
                         <configuration>
                             <options>
                                 <option>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</option>
+                                <option>--enable-preview</option>
                             </options>
                         </configuration>
                     </execution>
@@ -109,6 +111,7 @@
                         <id>ide-profile</id>
                         <configuration>
                             <options>
+                                <option>--enable-preview</option>
 				<option>${profiler.jvmargs.arg1}</option>
 				<option>${profiler.jvmargs.arg2}</option>
 				<option>${profiler.jvmargs.arg3}</option>

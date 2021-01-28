@@ -18,4 +18,8 @@ public interface OrderEntry {
     int getAmount();
 
     BigDecimal getUnitPrice();
+
+    void increaseAmount();
+
+    void decreaseAmount();
 }
