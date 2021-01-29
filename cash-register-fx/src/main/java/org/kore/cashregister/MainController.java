@@ -234,11 +234,31 @@ public class MainController implements Initializable {
 
         Instant now = Instant.now();
         printer.print(now, entries, results.getActTotal());
-        orderRegistry.persistOrder(now, entries);
+        persistResults("Kassa", now, "Bonierung", "Boniervorgang ist gestartet", entries);
+    }
+
+    @FXML
+    public void storeButtonClicked(ActionEvent e) {
+        TextInputDialog td = new TextInputDialog("");
+        td.setHeaderText("Bitte Namen des Kassiers oder Kassa eingeben:");
+        String cashier = td.showAndWait().orElse("Kassa");
+
+        if (cashier.isBlank()) {
+            cashier = "Kassa";
+        }
+
+        List<OrderEntry> entries = results.getEntries();
+
+        Instant now = Instant.now();
+        persistResults(cashier, now, "Ablage", "Ablage- bzw. Speichervorgang ist gestartet", entries);
+    }
+
+    private void persistResults(String cashier, Instant now, String title, String header, List<OrderEntry> entries) {
+        orderRegistry.persistOrder(cashier, now, entries);
 
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Bezahlung");
-        alert.setHeaderText("Zahlvorgang ist gestartet");
+        alert.setTitle(title);
+        alert.setHeaderText(header);
         alert.setContentText("Der Rechnungsbetrag lautet: € " + resultOverall.getText());
         alert.showAndWait();
 
@@ -260,8 +280,6 @@ public class MainController implements Initializable {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Bitte eine Auswahl in der Liste treffen");
-//alert.setContentText("Ooops, there was an error!");
-
             alert.showAndWait();
         }
     }

@@ -33,14 +33,14 @@ public class PersistentOrderRegistry implements OrderRegistry {
 
     public PersistentOrderRegistry(Path storageFolder) {
         this.storageFolder = storageFolder;
-        this.fileId = "kassenbons.csv";
+        this.fileId = "belege.csv";
     }
 
 
 
     @Override
-    public void persistOrder(Instant orderTime, List<OrderEntry> entries) {
-        Path orderFile = Paths.get(storageFolder.toString(), fileId);
+    public void persistOrder(String cashier, Instant orderTime, List<OrderEntry> entries) {
+        Path orderFile = Paths.get(storageFolder.toString(), cashier + "_" + fileId);
 
         List<String> lines = new ArrayList<>(entries.size());
         if (Files.notExists(orderFile)) {
