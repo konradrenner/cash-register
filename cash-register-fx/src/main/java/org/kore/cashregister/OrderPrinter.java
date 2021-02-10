@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface OrderPrinter {
 
-    void print(Instant orderTime, List<OrderEntry> entries, BigDecimal total);
+    void print(long orderNumber, String cashierName, Instant orderTime, List<OrderEntry> entries, BigDecimal total);
 }

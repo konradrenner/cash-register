@@ -13,5 +13,5 @@ import java.util.List;
  * @author Konrad Renner
  */
 public interface OrderRegistry {
-    void persistOrder(String cashier, Instant orderTime, List<OrderEntry> entries);
+    void persistOrder(long orderNumber, String cashier, Instant orderTime, List<OrderEntry> entries);
 }

@@ -233,8 +233,9 @@ public class MainController implements Initializable {
         List<OrderEntry> entries = results.getEntries();
 
         Instant now = Instant.now();
-        printer.print(now, entries, results.getActTotal());
-        persistResults("Kassa", now, "Bonierung", "Boniervorgang ist gestartet", entries);
+        long orderId = now.getEpochSecond();
+        printer.print(orderId, "Kassa", now, entries, results.getActTotal());
+        persistResults(orderId, "Kassa", now, "Bonierung", "Boniervorgang ist gestartet", entries);
     }
 
     @FXML
@@ -250,11 +251,11 @@ public class MainController implements Initializable {
         List<OrderEntry> entries = results.getEntries();
 
         Instant now = Instant.now();
-        persistResults(cashier, now, "Ablage", "Ablage- bzw. Speichervorgang ist gestartet", entries);
+        persistResults(now.getEpochSecond(), cashier, now, "Ablage", "Ablage- bzw. Speichervorgang ist gestartet", entries);
     }
 
-    private void persistResults(String cashier, Instant now, String title, String header, List<OrderEntry> entries) {
-        orderRegistry.persistOrder(cashier, now, entries);
+    private void persistResults(long orderNumber, String cashier, Instant now, String title, String header, List<OrderEntry> entries) {
+        orderRegistry.persistOrder(orderNumber, cashier, now, entries);
 
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(title);

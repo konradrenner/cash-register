@@ -39,7 +39,7 @@ public class PersistentOrderRegistry implements OrderRegistry {
 
 
     @Override
-    public void persistOrder(String cashier, Instant orderTime, List<OrderEntry> entries) {
+    public void persistOrder(long orderNumber, String cashier, Instant orderTime, List<OrderEntry> entries) {
         Path orderFile = Paths.get(storageFolder.toString(), cashier + "_" + fileId);
 
         List<String> lines = new ArrayList<>(entries.size());
@@ -48,7 +48,7 @@ public class PersistentOrderRegistry implements OrderRegistry {
         }
         entries.stream()
                 .map(this::createLine)
-                .map(line -> orderTime.getEpochSecond() + SEMICOLON + orderTime.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)) + SEMICOLON + orderTime.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)) + SEMICOLON + line)
+                .map(line -> orderNumber + SEMICOLON + orderTime.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)) + SEMICOLON + orderTime.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)) + SEMICOLON + line)
                 .forEach(lines::add);
 
         try {
