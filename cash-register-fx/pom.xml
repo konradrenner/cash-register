@@ -75,6 +75,9 @@
                 <version>0.0.5</version>
                 <configuration>
                     <mainClass>org.kore.cashregister.App</mainClass>
+                    <jlinkImageName>cash-register-fx</jlinkImageName>
+                    <jlinkZipName>cash-register-fx</jlinkZipName>
+                    <launcher>cash-register</launcher>
                     <options>
                         <option>--enable-preview</option>
                     </options>
