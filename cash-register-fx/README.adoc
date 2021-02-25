@@ -1,0 +1,15 @@
+= README
+
+This is a minimal tool to create cash-bons written in JavaFX. If you use the plattform independent "fat-jar" artifact, you need at least Java 15 installed on your system.
+
+IMPORTANT: All menu entries are loaded from a file "menu_entries.csv" in your storage folder (see below for this one). You can find a example find an example file link:menu_entries.csv[here].
+
+You can build a minimal artifact with the defaul maven profile with Maven javafx-plugin:  mvn javafx:jlink
+
+You can a "fat-jar" with the fat-jar maven profile: mvn clean package
+
+If you build the "fat-jar", you must --enable-preview when running java -jar because the project uses the new records feature.
+
+You can specify the storage folder (default is user home): -DstorageFolder=/what/ever/you/want/
+
+Full example (for "fat-jar", for the small image you have to adopt the launcher script): java -jar --enable-preview -DstorageFolder=/what/ever/you/want/ cash-register-fx-1.0.0.jar
