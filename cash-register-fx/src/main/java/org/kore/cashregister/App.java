@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import javafx.scene.image.Image;
 
 /**
@@ -38,6 +39,7 @@ public class App extends Application {
         String storageFolder = System.getProperty("storageFolder");
         if (storageFolder == null) {
             storageFolder = System.getProperty("user.home");
+            storageFolder = Paths.get(storageFolder, "cash-register-fx").toAbsolutePath().toString();
             System.setProperty("storageFolder", storageFolder);
         }
         launch();

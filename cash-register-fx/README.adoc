@@ -8,8 +8,6 @@ You can build a minimal artifact with the defaul maven profile with Maven javafx
 
 You can a "fat-jar" with the fat-jar maven profile: mvn clean package
 
-If you build the "fat-jar", you must --enable-preview when running java -jar because the project uses the new records feature.
+You can specify the storage folder (default is user.home/cash-register-fx): -DstorageFolder=/what/ever/you/want/
 
-You can specify the storage folder (default is user home): -DstorageFolder=/what/ever/you/want/
-
-Full example (for "fat-jar", for the small image you have to adopt the launcher script): java -jar --enable-preview -DstorageFolder=/what/ever/you/want/ cash-register-fx-1.0.0.jar
+Full example (for "fat-jar", for the small image you have to adopt the launcher script): java -jar -DstorageFolder=/what/ever/you/want/ cash-register-fx-x.y.z.jar
