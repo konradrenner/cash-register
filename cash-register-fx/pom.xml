@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.kore.cashregister</groupId>
     <artifactId>cash-register-fx</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>15</maven.compiler.target>
-        <javafx.version>15</javafx.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <javafx.version>17.0.1</javafx.version>
     </properties>
     <dependencies>
         <dependency>
@@ -69,24 +69,18 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <release>15</release>
-                    <compilerArgs>
-                        <arg>--enable-preview</arg>
-                    </compilerArgs>
+                    <release>17</release>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.5</version>
+                <version>0.0.8</version>
                 <configuration>
                     <mainClass>org.kore.cashregister.Main</mainClass>
                     <jlinkImageName>cash-register-fx</jlinkImageName>
                     <jlinkZipName>cash-register-fx</jlinkZipName>
                     <launcher>cash-register</launcher>
-                    <options>
-                        <option>--enable-preview</option>
-                    </options>
                 </configuration>
                 <executions>
                     <execution>
@@ -101,7 +95,6 @@
                         <configuration>
                             <options>
                                 <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000</option>
-                                <option>--enable-preview</option>
                             </options>
                         </configuration>
                     </execution>
@@ -111,7 +104,6 @@
                         <configuration>
                             <options>
                                 <option>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</option>
-                                <option>--enable-preview</option>
                             </options>
                         </configuration>
                     </execution>
@@ -120,7 +112,6 @@
                         <id>ide-profile</id>
                         <configuration>
                             <options>
-                                <option>--enable-preview</option>
 				<option>${profiler.jvmargs.arg1}</option>
 				<option>${profiler.jvmargs.arg2}</option>
 				<option>${profiler.jvmargs.arg3}</option>
@@ -134,9 +125,6 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
-                <configuration>
-                    <argLine>--enable-preview</argLine>
-                </configuration>
             </plugin>
         </plugins>
     </build>
