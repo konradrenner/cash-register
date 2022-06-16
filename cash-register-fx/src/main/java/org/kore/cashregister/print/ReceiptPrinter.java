@@ -26,6 +26,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.kore.cashregister.App;
@@ -37,6 +38,14 @@ import org.kore.cashregister.OrderPrinter;
  * @author Konrad Renner
  */
 public class ReceiptPrinter implements OrderPrinter {
+    
+    private final double fontSize;
+
+    public ReceiptPrinter() {
+        this.fontSize = Double.parseDouble(System.getProperty("printing.font.size", "10"));
+    }
+    
+    
 
     @Override
     public void print(long orderId, String cashierName, Instant orderTime, List<OrderEntry> entries, BigDecimal total) {
@@ -53,6 +62,7 @@ public class ReceiptPrinter implements OrderPrinter {
             // Print the node
             PageLayout defaultPageLayout = printer.getDefaultPageLayout();
             PageLayout customLayout = printer.createPageLayout(defaultPageLayout.getPaper(), PageOrientation.PORTRAIT, 0, 0, 0, 0);
+            System.out.println("Printable width:"+customLayout.getPrintableWidth());
             boolean printed = job.printPage(customLayout,
                     createPrintNode(orderId, cashierName, orderTime, entries, total, customLayout.getPrintableWidth()));
 
@@ -83,14 +93,14 @@ public class ReceiptPrinter implements OrderPrinter {
     }
 
     void addMetainformations(ObservableList<Node> printList, long orderId, String cashierName, Instant orderTime, double maxWidth) {
-        TextFlow cashier = new TextFlow(new Text("Kassier:  "), new Text(cashierName));
+        TextFlow cashier = new TextFlow(createTextWithSettings("Kassier:  "), createTextWithSettings(cashierName));
         cashier.setPrefWidth(maxWidth);
 
-        TextFlow orderNumber = new TextFlow(new Text("Bon-Nr.: "), new Text(Long.toString(orderId)));
+        TextFlow orderNumber = new TextFlow(createTextWithSettings("Bon-Nr.: "), createTextWithSettings(Long.toString(orderId)));
         orderNumber.setPrefWidth(maxWidth);
 
-        TextFlow orderTst = new TextFlow(new Text("Datum:   "),
-                new Text(orderTime.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))));
+        TextFlow orderTst = new TextFlow(createTextWithSettings("Datum:   "),
+                createTextWithSettings(orderTime.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))));
         orderTst.setPrefWidth(maxWidth);
 
         printList.add(cashier);
@@ -99,63 +109,64 @@ public class ReceiptPrinter implements OrderPrinter {
     }
 
     void addOrders(ObservableList<Node> printList, List<OrderEntry> entries, double maxWidth) {
-        final double sectionSize = maxWidth / 6;
+        final double sectionSize = maxWidth / 5;
         final double sectionPart = sectionSize / 4;
 
-        final double widthCount = sectionPart * 2;
-        final double widthName = sectionSize * 2 + sectionPart;
-        final double widthSinglePrice = sectionSize + sectionPart * 2;
+        //following: some magic numbers :-) 
+        final double widthCount = sectionPart * 3;
+        final double widthName = sectionSize * 3 + sectionPart * 2;
+//        final double widthSinglePrice = sectionSize + sectionPart * 2;
         final double widthTotalPrice = sectionSize + sectionPart * 3;
 
-        addOrdersHead(widthCount, widthName, widthSinglePrice, widthTotalPrice, maxWidth, printList);
+        addOrdersHead(widthCount, widthName, widthTotalPrice, maxWidth, printList);
 
         entries.stream().forEach(entry -> {
-            Label count = new Label(Integer.toString(entry.getAmount()));
+            Label count = createLabelWithSettings(Integer.toString(entry.getAmount()));
             count.setPrefWidth(widthCount);
             count.setAlignment(Pos.CENTER_RIGHT);
 
-            Label name = new Label(entry.getDescription());
+            Label name = createLabelWithSettings(entry.getDescription());
             name.setPrefWidth(widthName);
             name.setAlignment(Pos.CENTER_LEFT);
 
-            Label single = new Label(entry.getUnitPrice().toPlainString());
-            single.setPrefWidth(widthSinglePrice);
-            single.setAlignment(Pos.CENTER_RIGHT);
+//            Label single = createLabelWithSettings(entry.getUnitPrice().toPlainString());
+//            single.setPrefWidth(widthSinglePrice);
+//            single.setAlignment(Pos.CENTER_RIGHT);
 
-            Label total = new Label(entry.getUnitPrice().multiply(BigDecimal.valueOf(entry.getAmount())).toPlainString());
+            Label total = createLabelWithSettings(entry.getUnitPrice().multiply(BigDecimal.valueOf(entry.getAmount())).toPlainString());
             total.setPrefWidth(widthTotalPrice);
             total.setAlignment(Pos.CENTER_RIGHT);
 
-            HBox order = new HBox(count, name, single, total);
-            order.setPadding(new Insets(0, 3, 0, 4));
+            HBox order = new HBox(count, name, total);
+            order.setPadding(new Insets(0, 1, 0, 1));
             order.setPrefWidth(maxWidth);
             printList.add(order);
         });
     }
 
-    private void addOrdersHead(final double widthCount, final double widthName, final double widthSinglePrice, final double widthTotalPrice, double maxWidth, ObservableList<Node> printList) {
-        Label countHead = new Label(" "); //Nothing at the moment
+    private void addOrdersHead(final double widthCount, final double widthName, final double widthTotalPrice, double maxWidth, ObservableList<Node> printList) {
+        Label countHead = createLabelWithSettings(" "); //Nothing at the moment
         countHead.setStyle("-fx-font-weight: bold");
         countHead.setPrefWidth(widthCount);
         countHead.setAlignment(Pos.CENTER_LEFT);
 
-        Label nameHead = new Label("Artikel");
+        Label nameHead = createLabelWithSettings("Artikel");
         nameHead.setStyle("-fx-font-weight: bold");
         nameHead.setPrefWidth(widthName);
         nameHead.setAlignment(Pos.CENTER_LEFT);
 
-        Label singleHead = new Label("Einzel");
-        singleHead.setStyle("-fx-font-weight: bold");
-        singleHead.setPrefWidth(widthSinglePrice);
-        singleHead.setAlignment(Pos.CENTER_RIGHT);
+//        Label singleHead = createLabelWithSettings("Einzel");
+//        singleHead.setStyle("-fx-font-weight: bold");
+//        singleHead.setPrefWidth(widthSinglePrice);
+//        singleHead.setAlignment(Pos.CENTER_RIGHT);
 
-        Label totalHead = new Label("Gesamt");
+        Label totalHead = createLabelWithSettings("Gesamt");
         totalHead.setStyle("-fx-font-weight: bold");
         totalHead.setPrefWidth(widthTotalPrice);
         totalHead.setAlignment(Pos.CENTER_RIGHT);
 
-        HBox ordersHead = new HBox(countHead, nameHead, singleHead, totalHead);
-        ordersHead.setPadding(new Insets(0, 3, 0, 4));
+        HBox ordersHead = new HBox(countHead, nameHead, totalHead);
+        ordersHead.setPadding(new Insets(0, 1, 0, 1));
         ordersHead.setPrefWidth(maxWidth);
         printList.add(ordersHead);
     }
@@ -163,25 +174,25 @@ public class ReceiptPrinter implements OrderPrinter {
     void addAmount(ObservableList<Node> printList, BigDecimal total, double maxWidth) {
         double width = maxWidth / 2;
 
-        Label sumLabel = new Label("Summe:");
+        Label sumLabel = createLabelWithSettings("Summe:");
         sumLabel.setPrefWidth(width);
         sumLabel.setAlignment(Pos.CENTER_LEFT);
 
-        Label sum = new Label(total.toPlainString());
+        Label sum = createLabelWithSettings(total.toPlainString());
         sum.setStyle("-fx-font-weight: bold");
         sum.setPrefWidth(width);
         sum.setAlignment(Pos.CENTER_RIGHT);
 
         HBox sumBox = new HBox(sumLabel, sum);
         sumBox.setPrefWidth(maxWidth);
-        Label payment = new Label("Bar bezahlt");
+        Label payment = createLabelWithSettings("Bar bezahlt");
         payment.setStyle("-fx-font-weight: bold");
         printList.add(sumBox);
         printList.add(payment);
     }
 
     void addFinishing(ObservableList<Node> printList, double maxWidth) {
-        Label finishing = new Label("", new Text("Die FF Stuben dankt!"));
+        Label finishing = new Label("", createTextWithSettings("Die FF Stuben dankt!"));
         finishing.setStyle("-fx-font-weight: bold");
         finishing.setAlignment(Pos.CENTER);
         finishing.setPrefWidth(maxWidth);
@@ -190,7 +201,7 @@ public class ReceiptPrinter implements OrderPrinter {
 
     Node createPrintNode(long orderId, String cashierName, Instant orderTime, List<OrderEntry> entries, BigDecimal total, double maxWidth) {
         VBox baseBox = new VBox();
-        baseBox.setPadding(new Insets(1, 0, 2, 0));
+        baseBox.setPadding(new Insets(0, 1, 0, 1));
         baseBox.setMaxWidth(maxWidth);
         ObservableList<Node> children = baseBox.getChildren();
         children.add(createLogoView(maxWidth));
@@ -203,5 +214,17 @@ public class ReceiptPrinter implements OrderPrinter {
         children.add(createNewSeparator(maxWidth));
         addFinishing(children, maxWidth);
         return baseBox;
+    }
+    
+    Label createLabelWithSettings(String text){
+        Label l = new Label(text);
+        l.setFont(Font.font(this.fontSize));
+        return l;
+    }
+    
+    Text createTextWithSettings(String text){
+        Text l = new Text(text);
+        l.setFont(Font.font(this.fontSize));
+        return l;
     }
 }

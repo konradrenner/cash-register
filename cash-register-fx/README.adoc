@@ -11,3 +11,5 @@ You can a "fat-jar" with the fat-jar maven profile: mvn clean package
 You can specify the storage folder (default is user.home/cash-register-fx): -DstorageFolder=/what/ever/you/want/
 
 Full example (for "fat-jar", for the small image you have to adopt the launcher script): java -jar -DstorageFolder=/what/ever/you/want/ cash-register-fx-x.y.z.jar
+
+For printing, you can specify a font size with the system property printing.font.size (default ist 10).
